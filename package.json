@@ -1,0 +1,28 @@
+{
+  "name": "rpi-led-matrix-painter-test",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "cd ./src/ && tsc",
+    "serve": "npm run build && npm run go",
+    "go": "cd ./dist/ && node index.js",
+    "postinstall": "npm run build",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "Implement",
+    "package",
+    "rpi-led-matrix-painter",
+    "with",
+    "some",
+    "examples",
+    "of",
+    "use."
+  ],
+  "author": "Wesley Tabaka <wt@wesleytabaka.com>",
+  "license": "MIT",
+  "dependencies": {
+    "rpi-led-matrix-painter": "file:../rpi-led-matrix-painter/rpi-led-matrix-painter"
+  }
+}
