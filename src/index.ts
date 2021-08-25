@@ -9,10 +9,8 @@ export class MyClass {
             ...Board.RpiLedMatrix.LedMatrix.defaultMatrixOptions(),
             rows: 32,
             cols: 64,
-        chainLength: 2,
-        pixelMapperConfig: this.pixelMapperConfig
-        // pwmBits: 7
-        
+            chainLength: 2,
+            pixelMapperConfig: this.pixelMapperConfig
         },
         {
             ...Board.RpiLedMatrix.LedMatrix.defaultRuntimeOptions(),
@@ -36,23 +34,6 @@ export class MyClass {
 
         this.demo();
 
-        // this.mypainter.getCanvas().addCanvasSection(new Board.CanvasSection("whitescreen", 0, 0, 0, 64, 64, [
-        //     {
-        //         id: "rect",
-        //         drawMode: Board.DrawMode.RECTANGLE,
-        //         drawModeOptions: {fill: true},
-        //         width: 16,
-        //         height: 16,
-        //         points: {x: 0, y: 0, z: 0},
-        //         color: 0xFFFFFF,
-        //         layer: 1
-        //     }
-        // ], true));
-
-        // this.mypainter.paint();
-
-        // setTimeout(() => {this.start();}, 500);
-
     }
 
     private leadingZeroes(num: number, digits: number): string {
@@ -75,9 +56,9 @@ export class MyClass {
                         {effectType: Board.EffectType.PULSE, effectOptions: {rate: 1000}}
                     ]},
                     points: [
-                        {x: 1, y: 0, z: 1}, // 
-                        {x: 3, y: 2, z: 1}, //
-                        {x: 5, y: 0, z: 1}, //
+                        {x: 1, y: 0, z: 1},
+                        {x: 3, y: 2, z: 1},
+                        {x: 5, y: 0, z: 1},
                         {x: 6, y: 1, z: 1},
                         {x: 4, y: 3, z: 1},
                         {x: 6, y: 5, z: 1},
@@ -114,17 +95,11 @@ export class MyClass {
                         color: 0x805000,
                         drawModeOptions: {fill: true, effects: [
                             {effectType: Board.EffectType.BLINK, effectOptions: {rate: 500}}
-                            // {effectType: Board.EffectType.SCROLLRIGHT, effectOptions: {rate: 200}}
-                            // {effectType: Board.EffectType.BLINK, effectOptions: {rate: 500}}
                         ]},
                         points: [
                             {x: 4, y: 0, z: 1},
                             {x: 8, y: 6, z: 1},
                             {x: 0, y: 6, z: 1}
-        
-                            // {x: 2, y: 0, z: 1},
-                            // {x: 6, y: 6, z: 1},
-                            // {x: -2, y: 6, z: 1}
                         ],
                         layer: 5
                     },
@@ -142,9 +117,6 @@ export class MyClass {
                             {x: 4, y: 2, z: 2},
                             {x: 4, y: 3, z: 2},
                             {x: 4, y: 5, z: 2}
-                            // {x: 2, y: 2, z: 2},
-                            // {x: 2, y: 3, z: 2},
-                            // {x: 2, y: 5, z: 2}
                         ],
                         layer: 6
                     },
@@ -188,7 +160,6 @@ export class MyClass {
                         font: "4x6",
                         fontPath: "/home/pi/code/rpi-led-matrix-painter-test/fonts/4x6.bdf",
                         effects: [
-                            // {effectType: Board.EffectType.BLINK, effectOptions: {rate: 500}}
                         ]
                     },
                     color: 0x008000,
@@ -250,246 +221,6 @@ export class MyClass {
         const timeString: string = this.leadingZeroes(date.getHours(), 2) + ":" + this.leadingZeroes(date.getMinutes(), 2) + ":" + this.leadingZeroes(date.getSeconds(), 2) + "." + this.leadingZeroes(date.getMilliseconds(), 3);
         const dateString: string = date.getFullYear() + '-' + this.leadingZeroes(date.getMonth() + 1, 2) + '-' + this.leadingZeroes(date.getDate(), 2);
 
-        // Use setRepresentation() method.
-
-        // this.mypainter.getCanvas().getCanvasSection("clock")?.setRepresentation([
-        //     {
-        //         id: "time",
-        //         drawMode: Board.DrawMode.TEXT,
-        //         color: 0x800000,
-        //         drawModeOptions: {fill: true, font: "5x7", "fontPath": "/home/pi/code/rpi-led-matrix-painter-test/fonts/5x7.bdf"},
-        //         points: {x: 0, y:0, z: 1},
-        //         text: timeString,
-        //         layer: 5
-        //     }, {
-        //         id: "date",
-        //         drawMode: Board.DrawMode.TEXT,
-        //         color: 0x800000,
-        //         drawModeOptions: {fill: false, font: "4x6", "fontPath": "/home/pi/code/rpi-led-matrix-painter-test/fonts/4x6.bdf"},
-        //         points: {x: 0, y: 8, z: 1},
-        //         text: dateString,
-        //         layer: 6
-        //     }]);
-        // this.mypainter.getCanvas().getCanvasSection("theworks")?.setRepresentation([
-        //     // {
-        //     //     id: "asterisk",
-        //     //     drawMode: Board.DrawMode.PIXEL,
-        //     //     color: 0x800080,
-        //     //     drawModeOptions: {effects: [
-        //     //         {effectType: Board.EffectType.SCROLLRIGHT, effectOptions: {rate: 200}},
-        //     //         {effectType: Board.EffectType.BLINK, effectOptions: {rate: 500}}
-        //     //     ]},
-        //     //     points: [
-        //     //         {x: 0, y: 0, z: 0}, // TL to BR
-        //     //         {x: 1, y: 1, z: 0},
-        //     //         {x: 2, y: 2, z: 0}, // Center
-        //     //         {x: 3, y: 3, z: 0},
-        //     //         {x: 4, y: 4, z: 0}, 
-
-        //     //         {x: 4, y: 0, z: 0}, // TR to BL
-        //     //         {x: 3, y: 1, z: 0},
-        //     //         {x: 1, y: 3, z: 0},
-        //     //         {x: 0, y: 4, z: 0},
-
-        //     //         {x: 2, y: 0, z: 0}, // T to B
-        //     //         {x: 2, y: 1, z: 0},
-        //     //         {x: 2, y: 3, z: 0},
-        //     //         {x: 2, y: 4, z: 0},
-
-        //     //         {x: 0, y: 2, z: 0}, // L to R
-        //     //         {x: 1, y: 2, z: 0},
-        //     //         {x: 3, y: 2, z: 0},
-        //     //         {x: 4, y: 2, z: 0},
-                    
-        //     //         // {x: 0, y: 0, z: 0}, // Top left
-        //     //         // {x: 1, y: 1, z: 0},
-        //     //         // {x: 2, y: 2, z: 0}, // Center
-        //     //         // {x: 2, y: 1, z: 0},
-        //     //         // {x: 2, y: 0, z: 0}, // Top center
-        //     //         // {x: 3, y: 1, z: 0},
-        //     //         // {x: 4, y: 0, z: 0}, // Top right
-        //     //         // {x: 4, y: 2, z: 0}, // Far right
-        //     //         // {x: 3, y: 2, z: 0},
-        //     //         // {x: 0, y: 0, z: 0},
-        //     //         // {x: 0, y: 0, z: 0},
-        //     //         // {x: 0, y: 0, z: 0},
-        //     //         // {x: 0, y: 0, z: 0},
-        //     //         // {x: 0, y: 0, z: 0},
-        //     //         // {x: 0, y: 0, z: 0},
-        //     //     ],
-        //     //     layer: 5
-        //     // }
-
-        //     // Warning triangle
-        //     {
-        //         id: "theworks_triangle",
-        //         drawMode: Board.DrawMode.POLYGON,
-        //         color: 0x805000,
-        //         drawModeOptions: {fill: true, effects: [
-        //             {effectType: Board.EffectType.SCROLLRIGHT, effectOptions: {rate: 200}}
-        //             // {effectType: Board.EffectType.BLINK, effectOptions: {rate: 500}}
-        //         ]},
-        //         points: [
-        //             {x: 4, y: 0, z: 1},
-        //             {x: 8, y: 6, z: 1},
-        //             {x: 0, y: 6, z: 1}
-
-        //             // {x: 2, y: 0, z: 1},
-        //             // {x: 6, y: 6, z: 1},
-        //             // {x: -2, y: 6, z: 1}
-        //         ],
-        //         layer: 5
-        //     },
-        //     // Exclamation mark for warning triangle
-        //     {
-        //         id: "theworks_exclamation",
-        //         drawMode: Board.DrawMode.PIXEL,
-        //         drawModeOptions: {
-        //             effects: [
-        //                 {effectType: Board.EffectType.SCROLLRIGHT, effectOptions: {rate: 200}}
-        //                 // {effectType: Board.EffectType.BLINK, effectOptions: {rate: 500}}
-        //             ]
-        //         },
-        //         color: 0x000000,
-        //         points: [
-        //             {x: 4, y: 2, z: 2},
-        //             {x: 4, y: 3, z: 2},
-        //             {x: 4, y: 5, z: 2}
-        //             // {x: 2, y: 2, z: 2},
-        //             // {x: 2, y: 3, z: 2},
-        //             // {x: 2, y: 5, z: 2}
-        //         ],
-        //         layer: 6
-        //     },
-        //     {
-        //         id: "theworks_text",
-        //         drawMode: Board.DrawMode.TEXT,
-        //         drawModeOptions: {
-        //             font: "4x6",
-        //             fontPath: "/home/pi/code/rpi-led-matrix-painter-test/fonts/4x6.bdf",
-        //             effects: [
-        //                 {effectType: Board.EffectType.BLINK, effectOptions: {rate: 500}}
-        //             ]
-        //         },
-        //         color: 0x805000,
-        //         text: "Warning",
-        //         points: {x: 10, y: 1, z: 3},
-        //         layer: 7
-        //     }
-        // ]);
-        // this.mypainter.getCanvas().getCanvasSection("icons")?.setRepresentation([
-        //     // Red "X"
-        //     {
-        //         id: "x",
-        //         drawMode: Board.DrawMode.POLYGON,
-        //         color: 0x800000,
-        //         drawModeOptions: {fill: true},
-        //         points: [
-        //             {x: 1, y: 0, z: 1}, // 
-        //             {x: 3, y: 2, z: 1}, //
-        //             {x: 5, y: 0, z: 1}, //
-        //             {x: 6, y: 1, z: 1},
-        //             {x: 4, y: 3, z: 1},
-        //             {x: 6, y: 5, z: 1},
-        //             {x: 5, y: 6, z: 1},
-        //             {x: 3, y: 4, z: 1},
-        //             {x: 1, y: 6, z: 1},
-        //             {x: 0, y: 5, z: 1},
-        //             {x: 2, y: 3, z: 1},
-        //             {x: 0, y: 1, z: 1}
-        //         ],
-        //         layer: 5
-        //     },
-        //     // Smaller check mark
-        //     {
-        //         id: "checkmark",
-        //         drawMode: Board.DrawMode.POLYGON,
-        //         color: 0x008000,
-        //         drawModeOptions: {fill: true, },
-        //         points: [
-        //             {x: 9, y: 3, z: 1},
-        //             {x: 10, y: 4, z: 1},
-        //             {x: 14, y: 0, z: 1},
-        //             {x: 15, y: 1, z: 1},
-        //             {x: 10, y: 6, z: 1},
-        //             {x: 8, y: 4, z: 1}
-        //         ],
-        //         layer: 5
-        //     },
-        //     // Warning triangle
-        //     {
-        //         id: "triangle",
-        //         drawMode: Board.DrawMode.POLYGON,
-        //         color: 0x805000,
-        //         drawModeOptions: {fill: true, },
-        //         points: [
-        //             {x: 22, y: 0, z: 1},
-        //             {x: 26, y: 6, z: 1},
-        //             {x: 18, y: 6, z: 1}
-        //         ],
-        //         layer: 5
-        //     },
-        //     // Exclamation mark for warning triangle
-        //     {
-        //         id: "exclamation",
-        //         drawMode: Board.DrawMode.PIXEL,
-        //         color: 0x000000,
-        //         points: [
-        //             {x: 22, y: 2, z: 1},
-        //             {x: 22, y: 3, z: 1},
-        //             {x: 22, y: 5, z: 1}
-        //         ],
-        //         layer: 5
-        //     }
-        // ]);
-
-        // this.mypainter.getCanvas().getCanvasSection("bottomlayer")?.setRepresentation([
-        //     {
-        //         id: "rectangle",
-        //         drawMode: Board.DrawMode.RECTANGLE,
-        //         color: 0x000080,
-        //         drawModeOptions: {fill: true},
-        //         points: {x: 0, y: 0, z: 1},
-        //         width: 32,
-        //         height: 32,
-        //         layer: 5
-        //     }
-        // ]);
-
-        // this.mypainter.getCanvas().getCanvasSection("image")?.setRepresentation([
-        //     {
-        //         id: "wesley",
-        //         drawMode: Board.DrawMode.IMAGE,
-        //         color: 0x000000,
-        //         drawModeOptions: {fill: false},
-        //         imagePath: "/home/pi/code/rpi-led-matrix-painter-test/images/17529334.png",
-        //         points: {x: 0, y: 0, z: 0},
-        //         width: 32,
-        //         height: 32,
-        //         layer: 7
-        //     }
-        // ]);
-
-        // this.mypainter.getCanvas().getCanvasSection("scrollTest")?.setRepresentation([
-        //     {
-        //         id: "scrolltest",
-        //         drawMode: Board.DrawMode.TEXT,
-        //         color: 0xFFFFFF,
-        //         drawModeOptions: {
-        //             fill: false, 
-        //             font: "4x6", 
-        //             "fontPath": "/home/pi/code/rpi-led-matrix-painter-test/fonts/4x6.bdf",
-        //             effects: [{effectType: Board.EffectType.SCROLLLEFT, effectOptions: {rate: 200}}, {effectType: Board.EffectType.BLINK, effectOptions: {rate: 500}}]
-        //         },
-        //         points: {x: 0, y: 0, z: 1},
-        //         text: timeString,
-        //         layer: 6
-        //     }
-        // ]);
-
-
-        // Use setCanvas() method
-
         this.mypainter.getCanvas().setCanvas([
             {
                 name: "clock",
@@ -518,81 +249,7 @@ export class MyClass {
                     }
                 ]
             },
-            // Show all icons
-
-            // {
-            //     name: "icons",
-            //     x: 0,
-            //     y: 16,
-            //     z: 2,
-            //     width: 27,
-            //     height: 7,
-            //     representation: [
-            //         {
-            //             id: "x",
-            //             drawMode: Board.DrawMode.POLYGON,
-            //             color: 0x800000,
-            //             drawModeOptions: {fill: true},
-            //             points: [
-            //                 {x: 1, y: 0, z: 1}, // 
-            //                 {x: 3, y: 2, z: 1}, //
-            //                 {x: 5, y: 0, z: 1}, //
-            //                 {x: 6, y: 1, z: 1},
-            //                 {x: 4, y: 3, z: 1},
-            //                 {x: 6, y: 5, z: 1},
-            //                 {x: 5, y: 6, z: 1},
-            //                 {x: 3, y: 4, z: 1},
-            //                 {x: 1, y: 6, z: 1},
-            //                 {x: 0, y: 5, z: 1},
-            //                 {x: 2, y: 3, z: 1},
-            //                 {x: 0, y: 1, z: 1}
-            //             ],
-            //             layer: 5
-            //         },
-            //         // Smaller check mark
-            //         {
-            //             id: "checkmark",
-            //             drawMode: Board.DrawMode.POLYGON,
-            //             color: 0x008000,
-            //             drawModeOptions: {fill: true, },
-            //             points: [
-            //                 {x: 9, y: 3, z: 1},
-            //                 {x: 10, y: 4, z: 1},
-            //                 {x: 14, y: 0, z: 1},
-            //                 {x: 15, y: 1, z: 1},
-            //                 {x: 10, y: 6, z: 1},
-            //                 {x: 8, y: 4, z: 1}
-            //             ],
-            //             layer: 5
-            //         },
-            //         // Warning triangle
-            //         {
-            //             id: "triangle",
-            //             drawMode: Board.DrawMode.POLYGON,
-            //             color: 0x805000,
-            //             drawModeOptions: {fill: true, },
-            //             points: [
-            //                 {x: 22, y: 0, z: 1},
-            //                 {x: 26, y: 6, z: 1},
-            //                 {x: 18, y: 6, z: 1}
-            //             ],
-            //             layer: 5
-            //         },
-            //         // Exclamation mark for warning triangle
-            //         {
-            //             id: "exclamation",
-            //             drawMode: Board.DrawMode.PIXEL,
-            //             color: 0x000000,
-            //             points: [
-            //                 {x: 22, y: 2, z: 1},
-            //                 {x: 22, y: 3, z: 1},
-            //                 {x: 22, y: 5, z: 1}
-            //             ],
-            //             layer: 5
-            //         }
-            //     ]
-            // },
-
+           
             // Cycle through effects with each icon.
             {
                 name: "theworks",
