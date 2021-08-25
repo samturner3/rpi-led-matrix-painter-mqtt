@@ -26,7 +26,7 @@ export class MyClass {
 
         this.mypainter.getCanvas().addCanvasSection(new Board.CanvasSection("theworks", 0, 23, 3, 64, 7, [], true));
 
-        this.mypainter.getCanvas().addCanvasSection(new Board.CanvasSection("bottomlayer", 45, 0, 0, 32, 32, [], true));
+        // this.mypainter.getCanvas().addCanvasSection(new Board.CanvasSection("bottomlayer", 45, 0, 0, 32, 32, [], true));
 
         this.mypainter.getCanvas().addCanvasSection(new Board.CanvasSection("image", 0, 32, 3, 32, 32, [], true));
 
@@ -260,26 +260,26 @@ export class MyClass {
                 height: 7,
                 representation: this.cycleTheWorks()
             },
-            {
-                name: "bottomlayer",
-                x: 45,
-                y: 0,
-                z: 0,
-                width: 32,
-                height: 32,
-                representation: [
-                    {
-                        id: "rectangle",
-                        drawMode: Board.DrawMode.RECTANGLE,
-                        color: 0x000080,
-                        drawModeOptions: {fill: true},
-                        points: {x: 0, y: 0, z: 1},
-                        width: 32,
-                        height: 32,
-                        layer: 5
-                    }
-                ]
-            },
+            // {
+            //     name: "bottomlayer",
+            //     x: 45,
+            //     y: 0,
+            //     z: 0,
+            //     width: 32,
+            //     height: 32,
+            //     representation: [
+            //         {
+            //             id: "rectangle",
+            //             drawMode: Board.DrawMode.RECTANGLE,
+            //             color: 0x000080,
+            //             drawModeOptions: {fill: true},
+            //             points: {x: 0, y: 0, z: 1},
+            //             width: 32,
+            //             height: 32,
+            //             layer: 5
+            //         }
+            //     ]
+            // },
             {
                 name: "image",
                 x: 0,
