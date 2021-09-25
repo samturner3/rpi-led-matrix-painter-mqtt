@@ -23,6 +23,7 @@
   "author": "Wesley Tabaka <wt@wesleytabaka.com>",
   "license": "MIT",
   "dependencies": {
-    "rpi-led-matrix-painter": "file:../rpi-led-matrix-painter/rpi-led-matrix-painter"
-  }
+    "rpi-led-matrix-painter": "^1.0.2"
+  },
+  "devDependencies": {}
 }
