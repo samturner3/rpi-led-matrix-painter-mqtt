@@ -21,6 +21,6 @@ npm run go
 ```
 
 # Demo video
-<a href="https://www.youtube.com/watch?feature=player_embedded&v=c1jziITVWmk" target="_blank">
-    <img src="https://img.youtube.com/vi/c1jziITVWmk/0.jpg" alt="IMAGE ALT TEXT HERE"><br>View on YouTube
+<a href="https://www.youtube.com/watch?feature=player_embedded&v=wF0r5HqcEpQ" target="_blank">
+    <img src="https://img.youtube.com/vi/wF0r5HqcEpQ/0.jpg" alt="IMAGE ALT TEXT HERE"><br>View on YouTube
 </a>
