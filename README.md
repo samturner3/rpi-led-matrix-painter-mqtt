@@ -17,7 +17,7 @@ npm run build
 ```
 4. Run the package
 ```bash
-npm run go
+sudo npm run go
 ```
 
 # Demo video
