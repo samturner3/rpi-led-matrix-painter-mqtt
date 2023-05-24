@@ -1,4 +1,4 @@
-import { SignSettings, DefaultState } from "../src/interfaces/signSettings";
+import { SignSettings, DefaultState } from "../interfaces/signSettings";
 import * as Board from "rpi-led-matrix-painter";
 import * as dotenv from "dotenv";
 
@@ -10,10 +10,11 @@ export const SignSettingsInstance: SignSettings = {
     rows: 32,
     cols: 64,
     chainLength: 1,
-    pixelMapperConfig: Board.RpiLedMatrix.LedMatrixUtils.encodeMappers(
-      { type: Board.RpiLedMatrix.PixelMapperType.U },
-      { type: Board.RpiLedMatrix.PixelMapperType.Rotate, angle: 180 }
-    ),
+    hardwareMapping: Board.RpiLedMatrix.GpioMapping.AdafruitHatPwm,
+    // pixelMapperConfig: Board.RpiLedMatrix.LedMatrixUtils.encodeMappers(
+    //   { type: Board.RpiLedMatrix.PixelMapperType.U },
+    //   { type: Board.RpiLedMatrix.PixelMapperType.Rotate, angle: 180 }
+    // ),
   },
   runtimeOptions: {
     gpioSlowdown: 3,
@@ -35,6 +36,7 @@ export const SignSettingsInstance: SignSettings = {
       z: 1,
       width: 73,
       height: 13,
+      overflow: true,
       representation: [
         {
           id: "time",
@@ -43,10 +45,10 @@ export const SignSettingsInstance: SignSettings = {
           drawModeOptions: {
             fill: true,
             font: "5x7",
-            fontPath: "/fonts/5x7.bdf",
+            fontPath: "/home/pi/rpi-led-matrix-painter-mqtt/fonts/5x7.bdf",
           },
           points: { x: 0, y: 0, z: 1 },
-          text: "timeString",
+          text: { value: "HH:mm:ss:SSS", replaceWithDateTime: true },
           layer: 5,
         },
         {
@@ -56,10 +58,10 @@ export const SignSettingsInstance: SignSettings = {
           drawModeOptions: {
             fill: false,
             font: "4x6",
-            fontPath: "/fonts/4x6.bdf",
+            fontPath: "/home/pi/rpi-led-matrix-painter-mqtt/fonts/4x6.bdf",
           },
           points: { x: 0, y: 8, z: 1 },
-          text: "dateString",
+          text: { value: "yyyy-MM-dd", replaceWithDateTime: true },
           layer: 6,
         },
       ],
