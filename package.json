@@ -1,6 +1,6 @@
 {
-  "name": "rpi-led-matrix-painter-test",
-  "version": "1.2.0",
+  "name": "rpi-led-matrix-painter-mqtt",
+  "version": "0.0.1",
   "description": "",
   "main": "dist/index.js",
   "scripts": {
@@ -20,10 +20,15 @@
     "of",
     "use."
   ],
-  "author": "Wesley Tabaka <wt@wesleytabaka.com>",
+  "author": "Sam Turner",
   "license": "MIT",
   "dependencies": {
-    "rpi-led-matrix-painter": "^1.2.0"
+    "dotenv": "^16.0.3",
+    "mqtt": "^4.3.7",
+    "rpi-led-matrix-painter": "^1.2.2"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "@types/node": "^20.2.3",
+    "@types/ws": "^8.5.4"
+  }
 }
