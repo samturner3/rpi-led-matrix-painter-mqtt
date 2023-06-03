@@ -1,9 +1,37 @@
 import * as Board from 'rpi-led-matrix-painter';
-// import { CanvasSectionSettings } from 'rpi-led-matrix-painter/dist/canvassectionsettings';
 // import { connect } from 'mqtt';
 import { SignSettingsInstance } from './sign_configs/generic';
 import { canvasSectionsWithReplacedValues, preValidateDateTime } from './utils/replaceValues';
 import { SignSettings } from './interfaces/signSettings';
+import { CanvasSectionSettings } from 'rpi-led-matrix-painter/dist/canvassectionsettings';
+
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const testCanvasSection: CanvasSectionSettings[] = [
+  {
+    name: 'scrollTest',
+    x: 0,
+    y: 16,
+    z: 4,
+    width: 64,
+    height: 16,
+    representation: [
+      {
+        id: 'scrolltest',
+        drawMode: Board.DrawMode.TEXT,
+        color: 0x800000,
+        drawModeOptions: {
+          fill: false,
+          font: '6x12',
+          fontPath: '/home/pi/rpi-led-matrix-painter-mqtt/fonts/6x12.bdf',
+          effects: [{ effectType: Board.EffectType.SCROLLLEFT, effectOptions: { rate: 50 } }],
+        },
+        points: { x: 0, y: 0, z: 1 },
+        text: 'timeString',
+        layer: 6,
+      },
+    ],
+  },
+];
 export class MyClass {
   signSettingsInstance: SignSettings;
   myPainter: Board.Painter;
@@ -26,26 +54,28 @@ export class MyClass {
     );
   }
 
-  // public preValidate: () => void;
-
   public async start(): Promise<void> {
-    // SignSettingsInstance.canvasSections.forEach((canvasSection) => {
-    // this.myPainter
-    //   .getCanvas()
-    //   .addCanvasSection(
-    //     new Board.CanvasSection(
-    //       SignSettingsInstance.canvasSections[0].name,
-    //       SignSettingsInstance.canvasSections[0].x,
-    //       SignSettingsInstance.canvasSections[0].y,
-    //       SignSettingsInstance.canvasSections[0].z,
-    //       SignSettingsInstance.canvasSections[0].width,
-    //       SignSettingsInstance.canvasSections[0].height,
-    //       [],
-    //       SignSettingsInstance.canvasSections[0].overflow || true,
-    //     ),
-    //   );
-    // });
+    this.signSettingsInstance.canvasSections.forEach((canvasSection) => {
+      this.myPainter
+        .getCanvas()
+        .addCanvasSection(
+          new Board.CanvasSection(
+            canvasSection.name,
+            canvasSection.x,
+            canvasSection.y,
+            canvasSection.z,
+            canvasSection.width,
+            canvasSection.height,
+            [],
+            canvasSection.overflow || true,
+          ),
+        );
+    });
+
+    this.myPainter.getCanvas().addCanvasSection(new Board.CanvasSection('scrollTest', 0, 16, 4, 64, 16, [], true));
+
     if (await preValidateDateTime(this.signSettingsInstance)) this.demo();
+    console.log(JSON.stringify(canvasSectionsWithReplacedValues(this.signSettingsInstance.canvasSections), null, 2));
   }
 
   public startTime: number = new Date().getTime();
@@ -54,61 +84,45 @@ export class MyClass {
 
   public demo(): void {
     this.myPainter.getCanvas().setCanvas(canvasSectionsWithReplacedValues(this.signSettingsInstance.canvasSections));
-
-    // Update time and date
-    // this.myPainter.getCanvas().setCanvas([
-    //   {
-    //       name: "time and date",
-    //       x: 0,
-    //       y: 0,
-    //       z: 1,
-    //       width: 73,
-    //       height: 13,
-    //       representation: [
-    //           {
-    //               id: "time",
-    //               drawMode: Board.DrawMode.TEXT,
-    //               color: 0x800000,
-    //               drawModeOptions: {fill: true, font: "5x7", "fontPath": "/home/pi/rpi-led-matrix-painter-mqtt/fonts/5x7.bdf"},
-    //               points: {x: 0, y:0, z: 1},
-    //               text: timeString,
-    //               layer: 5
-    //           }, {
-    //               id: "date",
-    //               drawMode: Board.DrawMode.TEXT,
-    //               color: 0x800000,
-    //               drawModeOptions: {fill: false, font: "4x6", "fontPath": "/home/pi/rpi-led-matrix-painter-mqtt/fonts/4x6.bdf"},
-    //               points: {x: 0, y: 8, z: 1},
-    //               text: dateString,
-    //               layer: 6
-    //           }
-    //       ]
-    //   },
-    // ]);
-    // this.myPainter
-    //   .getCanvas()
-    //   .setCanvas(
-    //     SignSettingsInstance.canvasSections
-    //   );
+    // this.myPainter.getCanvas().setCanvas(testCanvasSection);
+    this.myPainter.getCanvas().setCanvas([
+      {
+        name: 'scrollTest',
+        x: 0,
+        y: 16,
+        z: 4,
+        width: 64,
+        height: 16,
+        representation: [
+          {
+            id: 'scrolltest',
+            drawMode: Board.DrawMode.TEXT,
+            color: 0x800000,
+            drawModeOptions: {
+              fill: false,
+              font: '6x12',
+              fontPath: '/home/pi/rpi-led-matrix-painter-mqtt/fonts/6x12.bdf',
+              effects: [{ effectType: Board.EffectType.SCROLLLEFT, effectOptions: { rate: 50 } }],
+            },
+            points: { x: 0, y: 0, z: 1 },
+            text: 'timeString',
+            layer: 6,
+          },
+        ],
+      },
+    ]);
 
     this.myPainter.paint();
 
     if (new Date().getTime() <= this.endTime) {
       setTimeout(() => {
         this.demo();
-      }, 5);
+      }, 50);
     } else {
       console.log('Quitting');
     }
-
-    // if(new Date().getTime() <= this.endTime){
-    //     setTimeout(() => {this.demo();}, 5);
-    // }
-    // else {
-    //     console.log("Quitting");
-    // }
   }
 }
 
-const myclassinstance = new MyClass(SignSettingsInstance);
-myclassinstance.start();
+const myClassInstance = new MyClass(SignSettingsInstance);
+myClassInstance.start();

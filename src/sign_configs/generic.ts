@@ -34,8 +34,8 @@ export const SignSettingsInstance: SignSettings = {
       x: 0,
       y: 0,
       z: 1,
-      width: 73,
-      height: 13,
+      width: 64,
+      height: 16,
       overflow: true,
       representation: [
         {
@@ -43,12 +43,14 @@ export const SignSettingsInstance: SignSettings = {
           drawMode: Board.DrawMode.TEXT,
           color: 0x800000,
           drawModeOptions: {
-            fill: true,
+            fill: false,
             font: '5x7',
             fontPath: '/home/pi/rpi-led-matrix-painter-mqtt/fonts/5x7.bdf',
+            // effects: [{ effectType: Board.EffectType.SCROLLLEFT, effectOptions: { rate: 50 } }],
           },
           points: { x: 0, y: 0, z: 1 },
-          text: 'HH:mm:ss:SSS',
+          // text: 'Hi',
+          text: '@@HH:mm:ss:SSS@@',
           layer: 5,
         },
         {
@@ -61,10 +63,37 @@ export const SignSettingsInstance: SignSettings = {
             fontPath: '/home/pi/rpi-led-matrix-painter-mqtt/fonts/4x6.bdf',
           },
           points: { x: 0, y: 8, z: 1 },
-          text: 'yyyy-MM-dd',
+          text: '@@yyyy-MM-dd@@',
           layer: 6,
         },
       ],
     },
+    // {
+    //   name: 'scrollTest',
+    //   x: 0,
+    //   y: 0,
+    //   z: 4,
+    //   width: 64,
+    //   height: 32,
+    //   representation: [
+    //     {
+    //       id: 'scrolltest',
+    //       drawMode: Board.DrawMode.TEXT,
+    //       color: 0x800000,
+    //       drawModeOptions: {
+    //         fill: false,
+    //         font: '6x12',
+    //         fontPath: '/home/pi/rpi-led-matrix-painter-mqtt/fonts/6x12.bdf',
+    //         effects: [
+    //           // { effectType: Board.EffectType.SCROLLLEFT, effectOptions: { rate: 50 } },
+    //           // { effectType: Board.EffectType.BLINK, effectOptions: { rate: 500 } },
+    //         ],
+    //       },
+    //       points: { x: 0, y: 0, z: 1 },
+    //       text: '@@HH:mm:ss:SSS@@',
+    //       layer: 6,
+    //     },
+    //   ],
+    // },
   ],
 };
