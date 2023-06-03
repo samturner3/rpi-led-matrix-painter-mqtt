@@ -1,38 +1,51 @@
-import * as Board from "rpi-led-matrix-painter";
-import { connect } from "mqtt";
-import { SignSettingsInstance } from "./sign_configs/generic";
-import { canvasSectionsWithReplacedValues } from "./utils/replaceValues";
+import * as Board from 'rpi-led-matrix-painter';
+// import { CanvasSectionSettings } from 'rpi-led-matrix-painter/dist/canvassectionsettings';
+// import { connect } from 'mqtt';
+import { SignSettingsInstance } from './sign_configs/generic';
+import { canvasSectionsWithReplacedValues, preValidateDateTime } from './utils/replaceValues';
+import { SignSettings } from './interfaces/signSettings';
 export class MyClass {
-  private myPainter = new Board.Painter(
-    {
-      ...Board.RpiLedMatrix.LedMatrix.defaultMatrixOptions(),
-      ...SignSettingsInstance.matrixOptions,
-    },
-    {
-      ...Board.RpiLedMatrix.LedMatrix.defaultRuntimeOptions(),
-      ...SignSettingsInstance.runtimeOptions,
-    }
-  );
+  signSettingsInstance: SignSettings;
+  myPainter: Board.Painter;
 
-  public start(): void {
+  constructor(signSettingsInstance: SignSettings) {
+    this.signSettingsInstance = signSettingsInstance;
+    this.myPainter = this.myNewPainter(signSettingsInstance);
+  }
+
+  private myNewPainter(sign: SignSettings): Board.Painter {
+    return new Board.Painter(
+      {
+        ...Board.RpiLedMatrix.LedMatrix.defaultMatrixOptions(),
+        ...sign.matrixOptions,
+      },
+      {
+        ...Board.RpiLedMatrix.LedMatrix.defaultRuntimeOptions(),
+        ...sign.runtimeOptions,
+      },
+    );
+  }
+
+  // public preValidate: () => void;
+
+  public async start(): Promise<void> {
     // SignSettingsInstance.canvasSections.forEach((canvasSection) => {
-    this.myPainter
-      .getCanvas()
-      .addCanvasSection(
-        new Board.CanvasSection(
-          SignSettingsInstance.canvasSections[0].name,
-          SignSettingsInstance.canvasSections[0].x,
-          SignSettingsInstance.canvasSections[0].y,
-          SignSettingsInstance.canvasSections[0].z,
-          SignSettingsInstance.canvasSections[0].width,
-          SignSettingsInstance.canvasSections[0].height,
-          [],
-          SignSettingsInstance.canvasSections[0].overflow || true
-        )
-      );
+    // this.myPainter
+    //   .getCanvas()
+    //   .addCanvasSection(
+    //     new Board.CanvasSection(
+    //       SignSettingsInstance.canvasSections[0].name,
+    //       SignSettingsInstance.canvasSections[0].x,
+    //       SignSettingsInstance.canvasSections[0].y,
+    //       SignSettingsInstance.canvasSections[0].z,
+    //       SignSettingsInstance.canvasSections[0].width,
+    //       SignSettingsInstance.canvasSections[0].height,
+    //       [],
+    //       SignSettingsInstance.canvasSections[0].overflow || true,
+    //     ),
+    //   );
     // });
-
-    this.demo();
+    if (await preValidateDateTime(this.signSettingsInstance)) this.demo();
   }
 
   public startTime: number = new Date().getTime();
@@ -40,11 +53,7 @@ export class MyClass {
   public currentTime: number = new Date().getTime();
 
   public demo(): void {
-    this.myPainter
-      .getCanvas()
-      .setCanvas(
-        canvasSectionsWithReplacedValues(SignSettingsInstance.canvasSections)
-      );
+    this.myPainter.getCanvas().setCanvas(canvasSectionsWithReplacedValues(this.signSettingsInstance.canvasSections));
 
     // Update time and date
     // this.myPainter.getCanvas().setCanvas([
@@ -89,7 +98,7 @@ export class MyClass {
         this.demo();
       }, 5);
     } else {
-      console.log("Quitting");
+      console.log('Quitting');
     }
 
     // if(new Date().getTime() <= this.endTime){
@@ -101,5 +110,5 @@ export class MyClass {
   }
 }
 
-const myclassinstance = new MyClass();
+const myclassinstance = new MyClass(SignSettingsInstance);
 myclassinstance.start();

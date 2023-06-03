@@ -31,3 +31,9 @@ sudo npm run go
 The aim of this software is to run on rpi led message signs and to connect to an MQTT broker to receive instructions from.
 
 It will be sign agnostic, all the main functions should be agnostic and individual signs setup via a settings file.
+
+# Wildcards
+
+`$$TextToBeReplaced$$`
+
+`@@this text will pe passed to date time parser@@`

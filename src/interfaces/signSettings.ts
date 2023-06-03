@@ -1,6 +1,6 @@
-import * as Board from "rpi-led-matrix-painter";
-import { IClientOptions } from "mqtt";
-import { CanvasSectionSettings } from "rpi-led-matrix-painter/dist/canvassectionsettings";
+import * as Board from 'rpi-led-matrix-painter';
+import { IClientOptions } from 'mqtt';
+import { CanvasSectionSettings } from 'rpi-led-matrix-painter/dist/canvassectionsettings';
 
 // If not defined, default MatrixOptions and runtimeOptions will be used.
 export interface SignSettings {
@@ -9,20 +9,7 @@ export interface SignSettings {
   runtimeOptions?: Partial<Board.RpiLedMatrix.RuntimeOptions>;
   mqttOptions: SignMqttOptions;
   defaultState: DefaultState;
-  canvasSections: CustomCanvasSectionSettings[];
-}
-
-export interface CustomCanvasSectionSettings
-  extends Omit<CanvasSectionSettings, "representation"> {
-  representation: CustomPaintingInstruction[];
-}
-
-export interface CustomPaintingInstruction
-  extends Omit<Board.PaintingInstruction, "text"> {
-  text?: {
-    value: string;
-    replaceWithDateTime?: boolean;
-  };
+  canvasSections: CanvasSectionSettings[];
 }
 
 /**
