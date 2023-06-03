@@ -32,6 +32,23 @@ const testCanvasSection: CanvasSectionSettings[] = [
     ],
   },
 ];
+
+const testSetCanvasSection: Board.PaintingInstruction[] = [
+  {
+    id: 'scrolltest',
+    drawMode: Board.DrawMode.TEXT,
+    color: 0x800000,
+    drawModeOptions: {
+      fill: false,
+      font: '6x12',
+      fontPath: '/home/pi/rpi-led-matrix-painter-mqtt/fonts/6x12.bdf',
+      effects: [{ effectType: Board.EffectType.SCROLLLEFT, effectOptions: { rate: 50 } }],
+    },
+    points: { x: 0, y: 0, z: 1 },
+    text: 'timeString',
+    layer: 6,
+  },
+];
 export class MyClass {
   signSettingsInstance: SignSettings;
   myPainter: Board.Painter;
@@ -85,30 +102,21 @@ export class MyClass {
   public demo(): void {
     this.myPainter.getCanvas().setCanvas(canvasSectionsWithReplacedValues(this.signSettingsInstance.canvasSections));
     // this.myPainter.getCanvas().setCanvas(testCanvasSection);
-    this.myPainter.getCanvas().setCanvas([
+    // this.myPainter.getCanvas().setCanvasSection('scrollTest', testSetCanvasSection);
+    this.myPainter.getCanvas().setCanvasSection('scrollTest', [
       {
-        name: 'scrollTest',
-        x: 0,
-        y: 16,
-        z: 4,
-        width: 64,
-        height: 16,
-        representation: [
-          {
-            id: 'scrolltest',
-            drawMode: Board.DrawMode.TEXT,
-            color: 0x800000,
-            drawModeOptions: {
-              fill: false,
-              font: '6x12',
-              fontPath: '/home/pi/rpi-led-matrix-painter-mqtt/fonts/6x12.bdf',
-              effects: [{ effectType: Board.EffectType.SCROLLLEFT, effectOptions: { rate: 50 } }],
-            },
-            points: { x: 0, y: 0, z: 1 },
-            text: 'timeString',
-            layer: 6,
-          },
-        ],
+        id: 'scrolltest',
+        drawMode: Board.DrawMode.TEXT,
+        color: 0x800000,
+        drawModeOptions: {
+          fill: false,
+          font: '6x12',
+          fontPath: '/home/pi/rpi-led-matrix-painter-mqtt/fonts/6x12.bdf',
+          effects: [{ effectType: Board.EffectType.SCROLLLEFT, effectOptions: { rate: 50 } }],
+        },
+        points: { x: 0, y: 0, z: 1 },
+        text: 'timeString',
+        layer: 6,
       },
     ]);
 
