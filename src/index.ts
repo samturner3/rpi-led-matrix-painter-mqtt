@@ -1,44 +1,51 @@
-import * as Board from "rpi-led-matrix-painter";
-import { connect } from "mqtt";
-import { SignSettingsInstance } from "../sign_configs/generic";
+import * as Board from 'rpi-led-matrix-painter';
+// import { CanvasSectionSettings } from 'rpi-led-matrix-painter/dist/canvassectionsettings';
+// import { connect } from 'mqtt';
+import { SignSettingsInstance } from './sign_configs/generic';
+import { canvasSectionsWithReplacedValues, preValidateDateTime } from './utils/replaceValues';
+import { SignSettings } from './interfaces/signSettings';
 export class MyClass {
-  private myPainter = new Board.Painter(
-    {
-      ...Board.RpiLedMatrix.LedMatrix.defaultMatrixOptions(),
-      ...SignSettingsInstance.matrixOptions,
-    },
-    {
-      ...Board.RpiLedMatrix.LedMatrix.defaultRuntimeOptions(),
-      ...SignSettingsInstance.runtimeOptions,
-    }
-  );
+  signSettingsInstance: SignSettings;
+  myPainter: Board.Painter;
 
-  public start(): void {
-    SignSettingsInstance.canvasSections.forEach((canvasSection) => {
-      this.myPainter
-        .getCanvas()
-        .addCanvasSection(
-          new Board.CanvasSection(
-            canvasSection.name,
-            canvasSection.x,
-            canvasSection.y,
-            canvasSection.z,
-            canvasSection.width,
-            canvasSection.height,
-            canvasSection.representation,
-            canvasSection.overflow
-          )
-        );
-    });
-
-    this.demo();
+  constructor(signSettingsInstance: SignSettings) {
+    this.signSettingsInstance = signSettingsInstance;
+    this.myPainter = this.myNewPainter(signSettingsInstance);
   }
 
-  private leadingZeroes(num: number, digits: number): string {
-    return ("0".repeat(digits) + num.toString()).substr(
-      num.toString().length,
-      digits + 1
+  private myNewPainter(sign: SignSettings): Board.Painter {
+    return new Board.Painter(
+      {
+        ...Board.RpiLedMatrix.LedMatrix.defaultMatrixOptions(),
+        ...sign.matrixOptions,
+      },
+      {
+        ...Board.RpiLedMatrix.LedMatrix.defaultRuntimeOptions(),
+        ...sign.runtimeOptions,
+      },
     );
+  }
+
+  // public preValidate: () => void;
+
+  public async start(): Promise<void> {
+    // SignSettingsInstance.canvasSections.forEach((canvasSection) => {
+    // this.myPainter
+    //   .getCanvas()
+    //   .addCanvasSection(
+    //     new Board.CanvasSection(
+    //       SignSettingsInstance.canvasSections[0].name,
+    //       SignSettingsInstance.canvasSections[0].x,
+    //       SignSettingsInstance.canvasSections[0].y,
+    //       SignSettingsInstance.canvasSections[0].z,
+    //       SignSettingsInstance.canvasSections[0].width,
+    //       SignSettingsInstance.canvasSections[0].height,
+    //       [],
+    //       SignSettingsInstance.canvasSections[0].overflow || true,
+    //     ),
+    //   );
+    // });
+    if (await preValidateDateTime(this.signSettingsInstance)) this.demo();
   }
 
   public startTime: number = new Date().getTime();
@@ -46,31 +53,43 @@ export class MyClass {
   public currentTime: number = new Date().getTime();
 
   public demo(): void {
-    const date: Date = new Date();
-    const timeString: string =
-      this.leadingZeroes(date.getHours(), 2) +
-      ":" +
-      this.leadingZeroes(date.getMinutes(), 2) +
-      ":" +
-      this.leadingZeroes(date.getSeconds(), 2) +
-      "." +
-      this.leadingZeroes(date.getMilliseconds(), 3);
-    const dateString: string =
-      date.getFullYear() +
-      "-" +
-      this.leadingZeroes(date.getMonth() + 1, 2) +
-      "-" +
-      this.leadingZeroes(date.getDate(), 2);
-
-    // this.myPainter.getCanvas().setCanvas(SignSettingsInstance.canvasSections);
+    this.myPainter.getCanvas().setCanvas(canvasSectionsWithReplacedValues(this.signSettingsInstance.canvasSections));
 
     // Update time and date
-    this.myPainter
-      .getCanvas()
-      .setCanvasSection(
-        "time and date",
-        SignSettingsInstance.canvasSections[0].representation
-      );
+    // this.myPainter.getCanvas().setCanvas([
+    //   {
+    //       name: "time and date",
+    //       x: 0,
+    //       y: 0,
+    //       z: 1,
+    //       width: 73,
+    //       height: 13,
+    //       representation: [
+    //           {
+    //               id: "time",
+    //               drawMode: Board.DrawMode.TEXT,
+    //               color: 0x800000,
+    //               drawModeOptions: {fill: true, font: "5x7", "fontPath": "/home/pi/rpi-led-matrix-painter-mqtt/fonts/5x7.bdf"},
+    //               points: {x: 0, y:0, z: 1},
+    //               text: timeString,
+    //               layer: 5
+    //           }, {
+    //               id: "date",
+    //               drawMode: Board.DrawMode.TEXT,
+    //               color: 0x800000,
+    //               drawModeOptions: {fill: false, font: "4x6", "fontPath": "/home/pi/rpi-led-matrix-painter-mqtt/fonts/4x6.bdf"},
+    //               points: {x: 0, y: 8, z: 1},
+    //               text: dateString,
+    //               layer: 6
+    //           }
+    //       ]
+    //   },
+    // ]);
+    // this.myPainter
+    //   .getCanvas()
+    //   .setCanvas(
+    //     SignSettingsInstance.canvasSections
+    //   );
 
     this.myPainter.paint();
 
@@ -79,7 +98,7 @@ export class MyClass {
         this.demo();
       }, 5);
     } else {
-      console.log("Quitting");
+      console.log('Quitting');
     }
 
     // if(new Date().getTime() <= this.endTime){
@@ -91,5 +110,5 @@ export class MyClass {
   }
 }
 
-const myclassinstance = new MyClass();
+const myclassinstance = new MyClass(SignSettingsInstance);
 myclassinstance.start();
