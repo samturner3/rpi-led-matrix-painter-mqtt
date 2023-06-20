@@ -10,7 +10,7 @@ It will be sign agnostic, all the main functions should be agnostic and individu
 
 It uses [wesleytabaka/rpi-led-matrix-painter](https://github.com/wesleytabaka/rpi-led-matrix-painter) as a base, and introduces the MQTT connection, updating, and page functions.
 
-# Contrubution
+# Contribution
 
 I would gladly like suggestions on features and funconality as I build this.
 
